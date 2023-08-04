@@ -710,6 +710,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1756601025}
+  scoreMultiplier: 10
+  tileManager: {fileID: 843926473}
 --- !u!4 &460482977
 Transform:
   m_ObjectHideFlags: 0
@@ -878,7 +880,8 @@ MonoBehaviour:
   - {fileID: 3161730249425066509, guid: 56fb5b99910e87446be7bbe4725a6efa, type: 3}
   - {fileID: 3161730249425066509, guid: f2329d43ac189eb4ea9a34fd11956bcb, type: 3}
   tileLength: 9.8
-  tilesOnScreen: 15
+  numberOfTilesOnScreen: 5
+  distanceThreshold: 15
   tileSpeedMultiplier: 1
 --- !u!4 &843926474
 Transform:

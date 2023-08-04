@@ -3,19 +3,25 @@ using System.Collections.Generic;
 
 public class TileManager : MonoBehaviour
 {
-  public Transform player; // Reference to the player car
-  public GameObject[] tilePrefabs; // Array of different tile prefabs
-  public float tileLength = 10f; // Length of each tile
-  public int tilesOnScreen = 5; // Number of tiles to keep on the screen at any given time
+  /* PRIVATE */
+  [SerializeField] private Transform player;
+  [SerializeField] private GameObject[] tilePrefabs;
+  [SerializeField] private float tileLength = 10f;
+  [SerializeField] private int numberOfTilesOnScreen = 5;
+  [SerializeField] private float distanceThreshold = 15f;
+  [SerializeField] private float tileSpeedMultiplier = 1f;
+  private readonly List<Transform> spawnedTiles = new(); // new List<Transform>();
 
-  private List<Transform> spawnedTiles = new List<Transform>();
+  /* PUBLIC */
+  public float TileSpeedMultiplier { get => tileSpeedMultiplier; set => tileSpeedMultiplier = value; }
 
-  // Tile movement speed multiplier (20 times faster)
-  public float tileSpeedMultiplier = 20f;
-
+  /* CONSTRUCTOR */
   private void Start()
   {
-    for (int i = 0; i < tilesOnScreen; i++)
+    Debug.Log($"tile: {tileSpeedMultiplier}");
+    Debug.Log($"TileSpeedMultiplier: {TileSpeedMultiplier}");
+
+    for (int i = 0; i < numberOfTilesOnScreen; i++)
     {
       SpawnTile();
     }
@@ -28,19 +34,18 @@ public class TileManager : MonoBehaviour
     {
       Transform tile = spawnedTiles[i];
       // Calculate the new position of the tile
-      Vector3 newPosition = tile.position + Vector3.back * (tileLength * tileSpeedMultiplier * Time.deltaTime);
+      Vector3 newPosition = tile.position + Vector3.back * (tileLength * TileSpeedMultiplier * Time.deltaTime);
 
       // Move the tile
       tile.position = newPosition;
 
       // Check if the tile has passed the player's position (z = 0)
-      if (tile.position.z < -15)
+      if (tile.position.z < -distanceThreshold)
       {
         RecycleTile(tile);
       }
     }
   }
-
 
   private void SpawnTile()
   {
@@ -51,20 +56,16 @@ public class TileManager : MonoBehaviour
 
   private void RecycleTile(Transform tile)
   {
-    // Deactivate the tile
     tile.gameObject.SetActive(false);
     // Reposition it at the end of the tiles array and update its position
-    tile.position = spawnedTiles[(spawnedTiles.Count - 1)].position + Vector3.forward * tileLength;
-    // Activate the tile
+    tile.position = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
     tile.gameObject.SetActive(true);
-    // Move the tile to the end of the list
     spawnedTiles.Remove(tile);
     spawnedTiles.Add(tile);
   }
 
-  // Adjust the tile movement speed in the Editor using a slider
   private void OnValidate()
   {
-    tileSpeedMultiplier = Mathf.Max(1f, tileSpeedMultiplier);
+    TileSpeedMultiplier = Mathf.Max(1f, TileSpeedMultiplier);
   }
 }
