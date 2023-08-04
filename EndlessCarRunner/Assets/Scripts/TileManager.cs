@@ -56,11 +56,20 @@ public class TileManager : MonoBehaviour
 
   private void RecycleTile(Transform tile)
   {
+    // Destroy all children and nested objects within the tile
+    foreach (Transform child in tile.transform)
+    {
+      Destroy(child.gameObject);
+    }
+
     tile.gameObject.SetActive(false);
-    // Reposition it at the end of the tiles array and update its position
+
     tile.position = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
+
     tile.gameObject.SetActive(true);
+
     spawnedTiles.Remove(tile);
+
     spawnedTiles.Add(tile);
   }
 
