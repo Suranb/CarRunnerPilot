@@ -7,7 +7,7 @@ public class TileManager : MonoBehaviour
   [SerializeField] private Transform player;
   [SerializeField] private GameObject[] tilePrefabs;
   [SerializeField] private float tileLength = 10f;
-  [SerializeField] private int numberOfTilesOnScreen = 5;
+  [SerializeField] private int numberOfTilesOnScreen = 15;
   [SerializeField] private float distanceThreshold = 15f;
   [SerializeField] private float tileSpeedMultiplier = 1f;
   private readonly List<Transform> spawnedTiles = new(); // new List<Transform>();
@@ -56,22 +56,14 @@ public class TileManager : MonoBehaviour
 
   private void RecycleTile(Transform tile)
   {
-    // Destroy all children and nested objects within the tile
-    foreach (Transform child in tile.transform)
-    {
-      Destroy(child.gameObject);
-    }
-
     tile.gameObject.SetActive(false);
-
-    tile.position = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
-
-    tile.gameObject.SetActive(true);
-
+    //tile.position = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
     spawnedTiles.Remove(tile);
+    Destroy(tile.gameObject);
 
-    spawnedTiles.Add(tile);
+    SpawnTile();
   }
+
 
   private void OnValidate()
   {
