@@ -1,3 +1,4 @@
+using CarRunner.Obstacles;
 public class EmptyCan : Obstacle
 {
   // Override abstract method

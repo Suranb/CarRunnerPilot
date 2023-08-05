@@ -1,3 +1,6 @@
+using UnityEngine;
+using CarRunner.Obstacles;
+
 public class WoodPlank : Obstacle
 {
   // Override abstract method
@@ -8,6 +11,11 @@ public class WoodPlank : Obstacle
 
   public override void PlayDestroyEffects()
   {
-    throw new System.NotImplementedException();
+    // throw new System.NotImplementedException();
+  }
+
+  public override void TakeDamage()
+  {
+    Debug.Log("Doign something else then taking damage...");
   }
 }

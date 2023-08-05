@@ -1,4 +1,5 @@
+
 public interface IObstacle
 {
-    void OnPlayerHit(PlayerController playerController);
+    void OnPlayerHit(CarRunner.Player.PlayerController playerController);
 }

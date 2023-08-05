@@ -1,27 +1,31 @@
 using UnityEngine;
+using CarRunner.Player;
 
-public abstract class Obstacle : MonoBehaviour
+namespace CarRunner.Obstacles
 {
-  public float speed;
-  public float damage;
-
-  // Declare your common methods here
-  public virtual void OnCollisionEnter(Collision collision)
+  public abstract class Obstacle : MonoBehaviour
   {
-    if (collision.gameObject.CompareTag("Player"))
+    [SerializeField] private int damage;
+
+    // Declare your common methods here
+    public virtual void OnTriggerEnter(Collider other)
     {
-      // Damage player
-      // You can call specific function here which will be different for each Obstacle
-
-      Debug.Log($"This gameobjects: {this.gameObject.name} got hit by the Player");
-
-      PlayDestroyAnimation();
-      PlayDestroyEffects();
+      if (other.gameObject.CompareTag("Player"))
+      {
+        TakeDamage();
+        PlayDestroyAnimation();
+        PlayDestroyEffects();
+      }
     }
+
+    public virtual void TakeDamage()
+    {
+      // Default behavior: damage the player
+      PlayerHealth.Instance.TakeDamage(damage);
+    }
+
+    // Declare abstract methods for specific obstacle behavior
+    public abstract void PlayDestroyAnimation();
+    public abstract void PlayDestroyEffects();
   }
-
-  // Declare abstract methods for specific obstacle behavior
-  public abstract void PlayDestroyAnimation();
-  public abstract void PlayDestroyEffects();
-
 }
