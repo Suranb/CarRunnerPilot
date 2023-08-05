@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
       hasCollided = true;
       Debug.Log("Collision with object on specified layer!");
 
-
       // Lets do our thing here before we set the hasCollided back to false
       // Maybe loose health or add damage to the car where smoke is coming out?
       // 

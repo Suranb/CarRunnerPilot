@@ -4,13 +4,9 @@ public class Coin : MonoBehaviour
 {
   private ScoreManager scoreManager;
   [SerializeField] private int coinValue = 1; // Value of the coin when collected
-
-  // Floating animation variables
-  public float floatAmplitude = 0.2f; // Amplitude of the floating motion
-  public float floatFrequency = 1f; // Frequency of the floating motion
-
-  // Rotation animation variables
-  public float rotationSpeed = 2f; // Speed of rotation
+  [SerializeField] private float floatAmplitude = 0.2f; // Amplitude of the floating motion
+  [SerializeField] private float floatFrequency = 1f; // Frequency of the floating motion
+  [SerializeField] private float rotationSpeed = 2f; // Speed of rotation
   private readonly float minYPosition = 0.25f;
 
   private void Start()

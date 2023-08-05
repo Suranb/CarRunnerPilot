@@ -13,21 +13,6 @@ public class GameManager : MonoBehaviour
   // Current game state
   private GameState currentGameState = GameState.Playing;
 
-  private void Awake()
-  {
-    if (Instance == null)
-    {
-      Instance = this;
-    }
-    else
-    {
-      Destroy(gameObject); // Ensure only one GameManager exists
-      return;
-    }
-
-    DontDestroyOnLoad(gameObject);
-  }
-
   // Method to handle game over
   public void GameOver()
   {

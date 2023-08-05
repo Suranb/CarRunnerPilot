@@ -7,8 +7,8 @@ public class TileManager : MonoBehaviour
   [SerializeField] private Transform player;
   [SerializeField] private GameObject[] tilePrefabs;
   [SerializeField] private float tileLength = 10f;
+  [SerializeField] private float playerTileDistance = 15f; // distance from player to the tile
   [SerializeField] private int numberOfTilesOnScreen = 15;
-  [SerializeField] private float distanceThreshold = 15f;
   [SerializeField] private float tileSpeedMultiplier = 1f;
   private readonly List<Transform> spawnedTiles = new(); // new List<Transform>();
 
@@ -40,7 +40,7 @@ public class TileManager : MonoBehaviour
       tile.position = newPosition;
 
       // Check if the tile has passed the player's position (z = 0)
-      if (tile.position.z < -distanceThreshold)
+      if (tile.position.z < -playerTileDistance)
       {
         RecycleTile(tile);
       }
@@ -50,9 +50,15 @@ public class TileManager : MonoBehaviour
   private void SpawnTile()
   {
     int randomIndex = Random.Range(0, tilePrefabs.Length);
-    GameObject tileObject = Instantiate(tilePrefabs[randomIndex], transform.forward * (spawnedTiles.Count * tileLength), Quaternion.identity);
+    Vector3 spawnPosition = Vector3.forward * tileLength;
+    if (spawnedTiles.Count > 0)
+    {
+      spawnPosition = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
+    }
+    GameObject tileObject = Instantiate(tilePrefabs[randomIndex], spawnPosition, Quaternion.identity);
     spawnedTiles.Add(tileObject.transform);
   }
+
 
   private void RecycleTile(Transform tile)
   {
@@ -63,7 +69,6 @@ public class TileManager : MonoBehaviour
 
     SpawnTile();
   }
-
 
   private void OnValidate()
   {
