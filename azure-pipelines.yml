@@ -13,4 +13,4 @@ steps:
 - script: |
     git clone https://github.com/Suranb/CarRunnerPilot.git
     cd yourrepo
-    git push https://suranbasharati@outlook.com@dev.azure.com/HoodStudios/EndlessCarRunner/_git/EndlessCarRunner --all
+    git push https://suranbasharati@outlook.com@dev.azure.com/HoodStudios/CarRunner/_git/CarRunner --all
