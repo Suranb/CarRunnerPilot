@@ -8,7 +8,7 @@ public class TileManager : MonoBehaviour
   [SerializeField] private GameObject[] tilePrefabs;
   [SerializeField] private float tileLength = 10f;
   [SerializeField] private float playerTileDistance = 15f; // distance from player to the tile
-  [SerializeField] private int numberOfTilesOnScreen = 15;
+  [SerializeField] private int numberOfTilesOnScreen = 1;
   [SerializeField] private float tileSpeedMultiplier = 1f;
   private readonly List<Transform> spawnedTiles = new(); // new List<Transform>();
 
@@ -34,7 +34,7 @@ public class TileManager : MonoBehaviour
     {
       Transform tile = spawnedTiles[i];
       // Calculate the new position of the tile
-      Vector3 newPosition = tile.position + Vector3.back * (tileLength * TileSpeedMultiplier * Time.deltaTime);
+      Vector3 newPosition = tile.position + Vector3.back * (TileSpeedMultiplier * Time.deltaTime);
 
       // Move the tile
       tile.position = newPosition;
