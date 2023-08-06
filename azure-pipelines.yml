@@ -1,0 +1,16 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+    - '*'
+
+steps:
+- checkout: none
+- script: |
+    git clone https://github.com/Suranb/CarRunnerPilot.git
+    cd yourrepo
+    git push https://yourusername@dev.azure.com/HoodStudios/EndlessCarRunner/_git/EndlessCarRunner --all
