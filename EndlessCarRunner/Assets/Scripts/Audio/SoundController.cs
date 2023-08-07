@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
-  [SerializeField] private AudioSource audioSource;
+  private AudioSource audioSource;
 
   private void Start()
   {
@@ -11,6 +11,7 @@ public class SoundController : MonoBehaviour
 
   public void PlaySound()
   {
+    Debug.Log("Play Sound...");
     audioSource.Play();
   }
 

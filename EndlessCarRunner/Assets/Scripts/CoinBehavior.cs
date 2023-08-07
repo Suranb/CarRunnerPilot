@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class CoinBehavior : MonoBehaviour
 {
@@ -7,42 +9,43 @@ public class CoinBehavior : MonoBehaviour
     [SerializeField] private float floatAmplitude = 0.2f;
     [SerializeField] private float floatFrequency = 1f;
     [SerializeField] private float rotationSpeed = 2f;
-    private readonly float minYPosition = 0.25f;
 
     public delegate void CoinCollectedHandler(int value);
     public event CoinCollectedHandler OnCoinCollected;
+    private AudioSource audioSource;
+    [SerializeField] private GameObject coinChild; // Reference to the child coin
+
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
-        //ApplyFloatingAnimation();
-        //ApplyRotationAnimation();
+        ApplyRotationAnimationDOTween();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            audioSource.Play();
+            coinChild.SetActive(false);
             CollectCoin();
         }
     }
-
     private void CollectCoin()
     {
         OnCoinCollected?.Invoke(coinValue);
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject, audioSource.clip.length);
     }
-
-    private void ApplyFloatingAnimation()
+    private void ApplyRotationAnimationDOTween()
     {
-        Vector3 pos = transform.position;
-        float floatingHeight = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        pos.y = Mathf.Clamp(floatingHeight, minYPosition, float.MaxValue);
-        transform.position = pos;
-    }
+        float endValue = 360f;  // Completing a full rotation around the Y axis
 
-    private void ApplyRotationAnimation()
-    {
-        float randomX = Random.Range(0f, 360f);
-        transform.Rotate(Vector3.forward, randomX * rotationSpeed * Time.deltaTime);
+        transform.DORotate(new Vector3(0, endValue, 0), rotationSpeed, RotateMode.FastBeyond360)  // FastBeyond360 allows unlimited rotations
+            .SetEase(Ease.Linear) // Linear for a constant rotation speed
+            .SetLoops(-1, LoopType.Yoyo); // Infinite loops with incremental rotation
     }
 }
