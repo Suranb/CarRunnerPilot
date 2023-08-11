@@ -11,6 +11,8 @@ namespace CarRunner.Player
     private Vector3 targetPosition;
     //private bool hasCollided = false;
     private bool isLaneSwitching = false;
+    private Tween moveTween;
+    private Tween rotateTween;
 
 
     [SerializeField] private float rotationSpeed = 10f;
@@ -36,18 +38,18 @@ namespace CarRunner.Player
         SwitchLane(1, Vector3.right, laneChangeRotation);
       }
 
-      // If the car is close to its target position and was previously lane-switching, start transitioning back to the initial rotation
       if (Vector3.Distance(transform.position, targetPosition) < 1f && isLaneSwitching)
       {
         isLaneSwitching = false;
         targetRotation = initialRotation;
       }
 
-      // Rotate the car
-      transform.DORotateQuaternion(targetRotation, rotationSpeed * Time.deltaTime);
+      if (rotateTween != null && rotateTween.IsActive()) rotateTween.Kill();
+      rotateTween = transform.DORotateQuaternion(targetRotation, rotationSpeed * Time.deltaTime);
 
-      // Move the car smoothly towards the target position
-      transform.DOMove(targetPosition, laneSwitchSpeed * Time.deltaTime).SetEase(Ease.InSine);
+      if (moveTween != null && moveTween.IsActive()) moveTween.Kill();
+      moveTween = transform.DOMove(targetPosition, laneSwitchSpeed * Time.deltaTime).SetEase(Ease.InSine);
+
     }
 
     private void SwitchLane(int laneChange, Vector3 direction, float rotationChange)

@@ -13,8 +13,12 @@ public class ScoreManager : MonoBehaviour
   private float lastFrameTime = 0f;
   private int coinAmount = 0;
 
-
   private void Update()
+  {
+    UpdateScore();
+  }
+
+  private void UpdateScore()
   {
     float currentFrameTime = Time.time;
     float frameDeltaTime = currentFrameTime - lastFrameTime;

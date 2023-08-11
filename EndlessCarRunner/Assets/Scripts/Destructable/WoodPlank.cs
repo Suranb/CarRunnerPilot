@@ -13,9 +13,4 @@ public class WoodPlank : Obstacle
   {
     // throw new System.NotImplementedException();
   }
-
-  public override void TakeDamage()
-  {
-    Debug.Log("Doign something else then taking damage...");
-  }
 }

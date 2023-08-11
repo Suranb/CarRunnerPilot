@@ -16,7 +16,6 @@ public class PlayerInfoManager : MonoBehaviour
         PlayerPrefs.DeleteKey("PlayerUsername");
         submitButton.onClick.AddListener(HandleSubmit);
 
-        // Check if the username exists in PlayerPrefs
         if (PlayerPrefs.HasKey(USERNAME_KEY))
         {
             usernameDisplayField.text = PlayerPrefs.GetString(USERNAME_KEY);

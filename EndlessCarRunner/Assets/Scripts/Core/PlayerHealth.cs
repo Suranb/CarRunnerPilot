@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 namespace CarRunner.Player
 {
   public class PlayerHealth : MonoBehaviour
   {
+    public event Action<int> OnHealthChanged;
     public static PlayerHealth Instance { get; private set; } // Static instance
-    [SerializeField] private int health = 3;
+    [SerializeField] private int health = 4;
 
     private void Awake()
     {
@@ -23,11 +25,17 @@ namespace CarRunner.Player
     {
       health -= damage;
 
+      OnHealthChanged?.Invoke(health);
+
       if (health <= 0)
       {
-        Debug.Log("Game Over");
-        // TODO: Add game over logic here
+        GameManager.Instance.GameOver();
       }
+    }
+
+    public int GetPlayerHealth()
+    {
+      return health;
     }
   }
 }

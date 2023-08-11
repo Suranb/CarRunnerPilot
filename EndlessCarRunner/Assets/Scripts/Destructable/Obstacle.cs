@@ -7,7 +7,6 @@ namespace CarRunner.Obstacles
   {
     [SerializeField] private int damage;
 
-    // Declare your common methods here
     public virtual void OnTriggerEnter(Collider other)
     {
       if (other.gameObject.CompareTag("Player"))
@@ -20,11 +19,9 @@ namespace CarRunner.Obstacles
 
     public virtual void TakeDamage()
     {
-      // Default behavior: damage the player
       PlayerHealth.Instance.TakeDamage(damage);
     }
 
-    // Declare abstract methods for specific obstacle behavior
     public abstract void PlayDestroyAnimation();
     public abstract void PlayDestroyEffects();
   }

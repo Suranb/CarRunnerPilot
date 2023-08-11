@@ -1,34 +1,53 @@
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Needed for scene management
+
 public class GameManager : MonoBehaviour
 {
+  public static GameManager Instance { get; private set; } // Singleton pattern
 
-  public static GameManager Instance { get; private set; }
+  [SerializeField] private GameObject gameOverUI;
+  [SerializeField] private GameObject pauseGameUI;
 
-  public enum GameState
+  private void Awake()
   {
-    Playing,
-    Paused,
-    GameOver
+    // Singleton pattern
+    if (Instance == null)
+    {
+      Instance = this;
+      DontDestroyOnLoad(gameObject);
+    }
+    else
+    {
+      Destroy(gameObject);
+    }
   }
 
-  // Current game state
-  private GameState currentGameState = GameState.Playing;
-
-  // Method to handle game over
   public void GameOver()
   {
-    // Handle game over logic, UI, and transitions
-    currentGameState = GameState.GameOver;
-  }
-
-  public void PauseGame()
-  {
-    currentGameState = GameState.Paused;
+    gameOverUI.SetActive(true);
+    DOTween.KillAll();
     Time.timeScale = 0f;
   }
-  public void ResumeGame()
+
+  public void Pause()
   {
-    currentGameState = GameState.Playing;
+    Time.timeScale = 0f;
+    DOTween.PauseAll();
+    pauseGameUI.SetActive(true);
+  }
+
+  public void Retry()
+  {
     Time.timeScale = 1f;
+    DOTween.RestartAll();
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+  }
+
+  public void MainMenu()
+  {
+    Time.timeScale = 1f;
+    DOTween.KillAll();
+    SceneManager.LoadScene("MainMenu");
   }
 }

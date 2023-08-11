@@ -12,10 +12,8 @@ public class TileManager : MonoBehaviour
   [SerializeField] private float tileSpeedMultiplier = 1f;
   private readonly List<Transform> spawnedTiles = new(); // new List<Transform>();
 
-  /* PUBLIC */
   public float TileSpeedMultiplier { get => tileSpeedMultiplier; set => tileSpeedMultiplier = value; }
 
-  /* CONSTRUCTOR */
   private void Start()
   {
     Debug.Log($"tile: {tileSpeedMultiplier}");
