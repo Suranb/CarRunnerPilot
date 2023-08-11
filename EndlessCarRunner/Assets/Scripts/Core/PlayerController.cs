@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 namespace CarRunner.Player
@@ -8,11 +7,9 @@ namespace CarRunner.Player
     public float laneOffset = 3f;
     public float laneSwitchSpeed = 10f; // TODO-Suran: Here we can make this value less by upgrading the Car/wheels or picking up ability such a Michelin wheels or something?
     public int currentLane = 1;
+    private Vector3 startPosition;
     private Vector3 targetPosition;
-    //private bool hasCollided = false;
-    private bool isLaneSwitching = false;
-    private Tween moveTween;
-    private Tween rotateTween;
+    private float laneSwitchProgress = 1f;  // To keep track of Lerp progress
 
 
     [SerializeField] private float rotationSpeed = 10f;
@@ -22,42 +19,45 @@ namespace CarRunner.Player
 
     private void Start()
     {
-      targetPosition = transform.position;
+      startPosition = transform.position;
+      targetPosition = startPosition;
       initialRotation = transform.rotation;
       targetRotation = initialRotation;
     }
+
     private void Update()
     {
       // Detect lane switch input
-      if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane > 0)
+      if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane > 0 && laneSwitchProgress >= 1f)
       {
         SwitchLane(-1, Vector3.left, -laneChangeRotation);
       }
-      else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < 2)
+      else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < 2 && laneSwitchProgress >= 1f)
       {
         SwitchLane(1, Vector3.right, laneChangeRotation);
       }
 
-      if (Vector3.Distance(transform.position, targetPosition) < 1f && isLaneSwitching)
+      if (laneSwitchProgress < 1f)
       {
-        isLaneSwitching = false;
-        targetRotation = initialRotation;
+        laneSwitchProgress += Time.deltaTime * laneSwitchSpeed;
+        transform.position = Vector3.Lerp(startPosition, targetPosition, laneSwitchProgress);
+        transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, laneSwitchProgress);
       }
 
-      if (rotateTween != null && rotateTween.IsActive()) rotateTween.Kill();
-      rotateTween = transform.DORotateQuaternion(targetRotation, rotationSpeed * Time.deltaTime);
-
-      if (moveTween != null && moveTween.IsActive()) moveTween.Kill();
-      moveTween = transform.DOMove(targetPosition, laneSwitchSpeed * Time.deltaTime).SetEase(Ease.InSine);
-
+      if (laneSwitchProgress >= 1f && transform.rotation != initialRotation)
+      {
+        targetRotation = initialRotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+      }
     }
 
     private void SwitchLane(int laneChange, Vector3 direction, float rotationChange)
     {
-      isLaneSwitching = true;
       currentLane += laneChange;
+      startPosition = transform.position;
       targetPosition += direction * laneOffset;
       targetRotation = Quaternion.Euler(initialRotation.eulerAngles.x, initialRotation.eulerAngles.y, initialRotation.eulerAngles.z + rotationChange);
+      laneSwitchProgress = 0f; // Reset progress
     }
 
     /*TODO-SURAN: Remove this Method to its own Component to handle all collisions? */
