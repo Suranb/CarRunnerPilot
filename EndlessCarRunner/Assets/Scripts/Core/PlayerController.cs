@@ -9,8 +9,8 @@ namespace CarRunner.Player
     public int currentLane = 1;
     private Vector3 startPosition;
     private Vector3 targetPosition;
-    private float laneSwitchProgress = 1f;  // To keep track of Lerp progress
-
+    private float laneSwitchProgress = 1f;
+    private readonly float switchThreshold = 0.2f;  // Minimum time after which player can switch lanes again
 
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private Quaternion targetRotation;
@@ -28,11 +28,11 @@ namespace CarRunner.Player
     private void Update()
     {
       // Detect lane switch input
-      if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane > 0 && laneSwitchProgress >= 1f)
+      if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane > 0 && laneSwitchProgress >= switchThreshold)
       {
         SwitchLane(-1, Vector3.left, -laneChangeRotation);
       }
-      else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < 2 && laneSwitchProgress >= 1f)
+      else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < 2 && laneSwitchProgress >= switchThreshold)
       {
         SwitchLane(1, Vector3.right, laneChangeRotation);
       }
@@ -46,8 +46,7 @@ namespace CarRunner.Player
 
       if (laneSwitchProgress >= 1f && transform.rotation != initialRotation)
       {
-        targetRotation = initialRotation;
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, initialRotation, rotationSpeed * Time.deltaTime);
       }
     }
 
@@ -59,20 +58,5 @@ namespace CarRunner.Player
       targetRotation = Quaternion.Euler(initialRotation.eulerAngles.x, initialRotation.eulerAngles.y, initialRotation.eulerAngles.z + rotationChange);
       laneSwitchProgress = 0f; // Reset progress
     }
-
-    /*TODO-SURAN: Remove this Method to its own Component to handle all collisions? */
-    /*
-    private void OnCollisionEnter(Collision collision)
-    {
-      if (!hasCollided && collision.gameObject.layer == LayerMasks.Obstacle)
-      {
-        hasCollided = true;
-        Debug.Log("Collision with object on specified layer!");
-
-        // Lets do our thing here before we set the hasCollided back to false
-        // Maybe loose health or add damage to the car where smoke is coming out?
-      }
-    }
-    */
   }
 }

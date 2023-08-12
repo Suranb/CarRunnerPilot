@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028444, g: 0.2257151, b: 0.30692387, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -419,8 +419,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.19215688, g: 0.4745098, b: 0.4167352, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -715,7 +715,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.98365617, b: 0.8443396, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -760,7 +760,7 @@ Light:
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 5000
-  m_UseColorTemperature: 1
+  m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -774,13 +774,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.18526366, y: -0.8145841, z: 0.37984675, w: 0.39729926}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -128, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,6 +1171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0ecb1109d5a8d428e4b80c12fc640c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &832432462 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1893763815675338040, guid: e30170bb8b976b34e895829e8aaa5549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1138530475}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,12 +1255,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3547ddcc746b6f34fb25ee73bf176801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 832432462}
   tilePrefabs:
   - {fileID: 3161730249425066509, guid: c1c95c1aa31d7e34b8765697ff4a8cdf, type: 3}
   tileLength: 30
   playerTileDistance: 25
-  numberOfTilesOnScreen: 15
+  numberOfTilesOnScreen: 17
   tileSpeedMultiplier: 8
 --- !u!4 &843926474
 Transform:
@@ -1504,12 +1510,17 @@ PrefabInstance:
     - target: {fileID: 7366439433484881023, guid: e30170bb8b976b34e895829e8aaa5549,
         type: 3}
       propertyPath: health
-      value: 4
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7439039373604440448, guid: e30170bb8b976b34e895829e8aaa5549,
         type: 3}
       propertyPath: laneOffset
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7439039373604440448, guid: e30170bb8b976b34e895829e8aaa5549,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7439039373604440448, guid: e30170bb8b976b34e895829e8aaa5549,
         type: 3}

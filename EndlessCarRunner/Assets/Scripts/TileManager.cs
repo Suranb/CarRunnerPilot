@@ -16,8 +16,9 @@ public class TileManager : MonoBehaviour
 
   private void Start()
   {
-    Debug.Log($"tile: {tileSpeedMultiplier}");
-    Debug.Log($"TileSpeedMultiplier: {TileSpeedMultiplier}");
+    Vector3 spawnPosition = player.position - (Vector3.forward * (tileLength / 2));
+
+    SpawnTile(spawnPosition);
 
     for (int i = 0; i < numberOfTilesOnScreen; i++)
     {
@@ -27,17 +28,13 @@ public class TileManager : MonoBehaviour
 
   private void Update()
   {
-    // Move the tiles towards the player's position
     for (int i = 0; i < spawnedTiles.Count; i++)
     {
       Transform tile = spawnedTiles[i];
-      // Calculate the new position of the tile
       Vector3 newPosition = tile.position + Vector3.back * (TileSpeedMultiplier * Time.deltaTime);
 
-      // Move the tile
       tile.position = newPosition;
 
-      // Check if the tile has passed the player's position (z = 0)
       if (tile.position.z < -playerTileDistance)
       {
         RecycleTile(tile);
@@ -47,12 +44,19 @@ public class TileManager : MonoBehaviour
 
   private void SpawnTile()
   {
+    SpawnTile(Vector3.forward * tileLength);
+  }
+
+  private void SpawnTile(Vector3 spawnPosition)
+  {
     int randomIndex = Random.Range(0, tilePrefabs.Length);
-    Vector3 spawnPosition = Vector3.forward * tileLength;
     if (spawnedTiles.Count > 0)
     {
       spawnPosition = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
     }
+
+    spawnPosition.y = 0; // This ensures that the Y position is 0.
+
     GameObject tileObject = Instantiate(tilePrefabs[randomIndex], spawnPosition, Quaternion.identity);
     spawnedTiles.Add(tileObject.transform);
   }
