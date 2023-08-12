@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
   private void Update()
   {
     CheckForSpeedIncrease();
+    // TODO-SURAN: Remove this after testing
     if (lastSpeedIncreaseScore > 499)
       Debug.Log($"lastSpeedIncreaseScore {lastSpeedIncreaseScore}");
   }
