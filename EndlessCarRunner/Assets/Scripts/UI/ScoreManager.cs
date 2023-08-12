@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
   [SerializeField] private TileManager tileManager;
   [SerializeField] private SoundController soundController;
 
-  private float score = 0f;
+  public float Score { get; private set; } = 0f;
   private float lastFrameTime = 0f;
   private int coinAmount = 0;
 
@@ -25,9 +25,9 @@ public class ScoreManager : MonoBehaviour
     lastFrameTime = currentFrameTime;
 
     float scoreForFrame = frameDeltaTime * scoreMultiplier * tileManager.TileSpeedMultiplier;
-    score += scoreForFrame;
+    Score += scoreForFrame;
 
-    scoreText.text = Mathf.RoundToInt(score).ToString("000000");
+    scoreText.text = Mathf.RoundToInt(Score).ToString("000000");
   }
 
   public void CollectCoin(int coinValue)

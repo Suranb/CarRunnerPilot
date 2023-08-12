@@ -9,7 +9,7 @@ public class TileManager : MonoBehaviour
   [SerializeField] private float tileLength = 10f;
   [SerializeField] private float playerTileDistance = 15f; // distance from player to the tile
   [SerializeField] private int numberOfTilesOnScreen = 1;
-  [SerializeField] private float tileSpeedMultiplier = 1f;
+  [SerializeField] private float tileSpeedMultiplier = 8f;
   private readonly List<Transform> spawnedTiles = new(); // new List<Transform>();
 
   public float TileSpeedMultiplier { get => tileSpeedMultiplier; set => tileSpeedMultiplier = value; }
@@ -55,10 +55,15 @@ public class TileManager : MonoBehaviour
       spawnPosition = spawnedTiles[spawnedTiles.Count - 1].position + Vector3.forward * tileLength;
     }
 
-    spawnPosition.y = 0; // This ensures that the Y position is 0.
+    spawnPosition.y = 0;
 
     GameObject tileObject = Instantiate(tilePrefabs[randomIndex], spawnPosition, Quaternion.identity);
     spawnedTiles.Add(tileObject.transform);
+  }
+
+  public void IncreaseTileSpeed()
+  {
+    tileSpeedMultiplier += 0.5f; // Increment value can be changed based on your needs
   }
 
 

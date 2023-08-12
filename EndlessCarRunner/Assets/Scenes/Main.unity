@@ -1644,8 +1644,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e42e4a307b1c2bf4bb3b80f01e0fb99d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreManager: {fileID: 460482976}
+  tileManager: {fileID: 843926473}
   gameOverUI: {fileID: 1862103848}
   pauseGameUI: {fileID: 0}
+  scoreForSpeedIncrease: 500
 --- !u!4 &1329363731
 Transform:
   m_ObjectHideFlags: 0

@@ -4,10 +4,13 @@ using UnityEngine.SceneManagement; // Needed for scene management
 
 public class GameManager : MonoBehaviour
 {
+  public ScoreManager scoreManager;
+  public TileManager tileManager;
   public static GameManager Instance { get; private set; } // Singleton pattern
-
   [SerializeField] private GameObject gameOverUI;
   [SerializeField] private GameObject pauseGameUI;
+  public int scoreForSpeedIncrease = 500; // For every 500 points, increase the speed
+  private int lastSpeedIncreaseScore = 0;
 
   private void Awake()
   {
@@ -20,6 +23,21 @@ public class GameManager : MonoBehaviour
     else
     {
       Destroy(gameObject);
+    }
+  }
+
+  private void Update()
+  {
+    CheckForSpeedIncrease();
+    if (lastSpeedIncreaseScore > 499)
+      Debug.Log($"lastSpeedIncreaseScore {lastSpeedIncreaseScore}");
+  }
+  void CheckForSpeedIncrease()
+  {
+    if (scoreManager.Score - lastSpeedIncreaseScore >= scoreForSpeedIncrease)
+    {
+      tileManager.IncreaseTileSpeed();
+      lastSpeedIncreaseScore = (int)scoreManager.Score;
     }
   }
 
