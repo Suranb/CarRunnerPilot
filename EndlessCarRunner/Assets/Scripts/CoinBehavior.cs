@@ -9,7 +9,6 @@ public class CoinBehavior : MonoBehaviour
     public delegate void CoinCollectedHandler(int value);
     public event CoinCollectedHandler OnCoinCollected;
     private AudioSource audioSource;
-    [SerializeField] private GameObject coinChild;
 
     private void Awake()
     {
@@ -21,7 +20,6 @@ public class CoinBehavior : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             audioSource.Play();
-            coinChild.SetActive(false);
             CollectCoin();
         }
     }
