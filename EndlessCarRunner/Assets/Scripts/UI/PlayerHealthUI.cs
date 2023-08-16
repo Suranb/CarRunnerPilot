@@ -5,11 +5,12 @@ using TMPro;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-  [SerializeField] private PlayerHealth playerHealth;
+  private PlayerHealth playerHealth;
   [SerializeField] private TextMeshProUGUI healthDisplayValue;
 
   private void Start()
   {
+    playerHealth = PlayerHealth.Instance;
     healthDisplayValue.text = playerHealth.GetPlayerHealth().ToString();
     playerHealth.OnHealthChanged += UpdateHealthDisplay;
   }
