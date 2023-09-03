@@ -21,7 +21,6 @@ namespace CarRunner.Player
     [SerializeField] private float bumpSettleSpeed = 25f;  // How quickly the car settles back after the bump
     private float currentBumpRotation = 0f;  // Tracks the current rotation due to the bump
 
-
     private void Start()
     {
       startPosition = transform.position;
